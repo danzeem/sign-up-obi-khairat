@@ -1,144 +1,164 @@
 @import "modern-normalize";
 
+/* ===== Theme ===== */
 :root {
-  line-height: 1.5;
+  --bg-1: #0f766e;
+  --bg-2: #5eead4;
+
+  --card: #f8fafc;
+  --text: #0f172a;
+  --muted: #475569;
+
+  --border: #cbd5e1;
+  --focus: #0f766e;
+
+  --shadow: 0 20px 50px rgba(2, 44, 42, 0.25);
+
+  --radius: 18px;
+  --field-radius: 12px;
 }
 
-h1, h2, h3, h4, h5, figure, p, ol, ul {
+* { box-sizing: border-box; }
+
+body {
   margin: 0;
+  min-height: 100vh;
+  font-family: "Roboto", system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+  color: var(--text);
+  background: linear-gradient(135deg, var(--bg-1), var(--bg-2));
+  display: grid;
+  place-items: center;
+  padding: 28px;
 }
 
-ol[role="list"], ul[role="list"] {
-  list-style: none;
-  padding-inline: 0;
+/* ===== Card Layout ===== */
+.auth {
+  width: 100%;
+  display: grid;
+  place-items: center;
 }
 
-h1, h2, h3, h4, h5 {
-  font-size: inherit;
-  font-weight: inherit;
-}
-h1.account{
-  font-size: large;
-  font-weight: 1000;
-}
-img{
-  display: block;
-  max-inline-size: 100%;
+.card {
+  width: min(520px, 100%);
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(203, 213, 225, 0.7);
+  padding: 28px;
 }
 
-.playfair-display-bold {
+.card__header {
+  margin-bottom: 18px;
+}
+
+.title {
   font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
   font-weight: 700;
-  font-style: normal;
+  font-size: 30px;
+  letter-spacing: -0.3px;
+  margin: 0 0 6px 0;
 }
-label {
-  font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
+
+.subtext {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.link {
+  color: var(--focus);
   font-weight: 600;
-  font-style: normal;
-  color: #cccccc;
-  
+  text-decoration: none;
 }
-body{
-            /* Set the height of the div to
-            the entire screen */
-            height: 100vh;
+.link:hover { text-decoration: underline; }
 
-            /* linear-gradient syntax */
-            background-image: linear-gradient(135deg, #0F766E, #5EEAD4);
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-}
-form {
-    margin: 200px auto;
-    width: 400px;
-    border-color: black;
-    display: inline-block;
-    padding: 1em;
-    border: 1px solid #cccccc;
-    border-radius: 1em;
-    background-color: #F8FAFC;
-    color: #1F2933;
-
-  }
-div + div{
-    margin-top: 1em;
-}
-label{
-    display: inline-block;
-    width: 100%;
-    text-align: center;
+.fields {
+  display: grid;
+  gap: 14px;
+  margin-top: 16px;
+  margin-bottom: 18px;
 }
 
-input,
-textarea {
-  /* To make sure that all text field have the same font settings
-     By default, textarea are set with a monospace font */
-  font: 1em sans-serif;
-
-  /* To give the same size to all text field */
-  width: 300px;
-
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-
-  /* To harmonize the look & feel of text field border */
-  border: 1px solid #999999;
-  padding: 10px;
-}
-input[type="text"],
-input[type="password"],
-input[type="email"]{
-  box-shadow: inset 1px 1px 3px #cccccc;
-  border-radius: 5px;
-  height: 50px;
+/* ===== Floating Label Fields ===== */
+.field {
+  position: relative;
 }
 
-input:focus,
-textarea:focus {
-  /* To give a little highlight on active elements */
-  border: 2px solid #4a9d44; 
-   outline: none;
-  /* Optional: add a box-shadow for a softer look */
-}
-input:invalid{
-  /* To give a little highlight on active elements */
-  border: 2px solid #de1004; 
-   outline: none;
-  /* Optional: add a box-shadow for a softer look */
+.field input {
+  width: 100%;
+  height: 54px;
+  padding: 18px 14px 12px; /* top padding allows label space */
+  border-radius: var(--field-radius);
+  border: 1px solid var(--border);
+  background: #ffffff;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
 }
 
-textarea {
-  /* To properly align multiline text field with their label */
-  vertical-align: top;
-
-  /* To give enough room to type some text */
-  height: 8em;
-
-  /* To allow users to resize any textarea vertically
-     It works only on Chrome, Firefox and Safari */
-  resize: vertical;
+/* Hide placeholder text but keep placeholder-shown logic */
+.field input::placeholder {
+  color: transparent;
 }
 
-button {
-  /* This extra margin represent the same space as the space between
-     the labels and their text fields */
- font-size: 16px;
-  font-weight: bold;
+.field label {
+  position: absolute;
+  left: 12px;
+  top: 16px;
+  padding: 0 6px;
+  background: #ffffff; /* sits nicely on top of border */
+  color: #64748b;
+  font-size: 16px;
+  pointer-events: none;
+  transform-origin: left top;
+  transition: transform 160ms ease, top 160ms ease, color 160ms ease;
+}
 
-  color: #FFFFFF;
-  background-color: #0F766E;
-  width: 90%;
-  border: none;
-  border-radius: 25px;
-  padding: 10px 40px;
+/* When focused OR has value, float label up */
+.field input:focus {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.18);
+}
+
+.field input:focus + label,
+.field input:not(:placeholder-shown) + label {
+  top: 6px;
+  transform: scale(0.82);
+  color: var(--focus);
+}
+
+/* Invalid styling (only when user typed something) */
+.field input:invalid:not(:placeholder-shown) {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.14);
+}
+
+/* ===== Button ===== */
+.btn {
+  width: 100%;
+  height: 52px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--focus);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 16px;
   cursor: pointer;
+  transition: transform 120ms ease, filter 120ms ease;
 }
 
-button:hover{
-  background-color: #115E59;
+.btn:hover { filter: brightness(0.95); }
+.btn:active { transform: translateY(1px); }
+
+.footnote {
+  margin: 14px 0 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
 }
 
+/* Small screens */
+@media (max-width: 420px) {
+  .card { padding: 20px; }
+  .title { font-size: 26px; }
+}
